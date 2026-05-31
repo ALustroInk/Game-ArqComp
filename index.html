@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz | ArqComp</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="titlebar">
+      <span>QUIZ.EXE — ArqComp</span>
+      <div class="titlebar-btns">
+        <span>-</span><span>□</span><span class="x">×</span>
+      </div>
+    </div>
+
+    <div class="window-body">
+
+      <div class="tela ativa" id="tela-start">
+        <div class="tela-start-inner">
+          <h1>QUIZ<br>ARQCOMP</h1>
+          <p>teste seus conhecimentos<br>sobre arquitetura de computadores<br><br>9 perguntas · 1 chance por resposta</p>
+          <button class="button btn-start" onclick="iniciarQuiz()">&gt; JOGAR</button>
+        </div>
+      </div>
+
+      <div class="tela" id="tela-quiz">
+
+        <div class="progress">
+          <span id="label-progresso">Pergunta 1 de 9</span>
+          <span id="label-acertos">✔ 0 acertos</span>
+        </div>
+
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="barra" style="width:0%"></div>
+        </div>
+
+        <div class="questions-container">
+          <div class="questions" id="texto-pergunta"></div>
+          <div class="dica" id="texto-dica" style="display:none"></div>
+          <div class="answers-container" id="alternativas"></div>
+        </div>
+
+        <div class="controls-container">
+          <button class="button btn-next" id="btn-next" onclick="proximaPergunta()" style="display:none">
+            Próxima &gt;
+          </button>
+        </div>
+
+      </div>
+
+      <div class="tela" id="tela-resultado">
+        <div class="resultado-inner">
+          <h2>FIM DO QUIZ!</h2>
+          <div class="placar" id="placar-final"></div>
+          <div class="mensagem" id="mensagem-final"></div>
+          <div class="detalhes" id="detalhes-final"></div>
+          <button class="button btn-restart" onclick="reiniciar()">&gt; JOGAR NOVAMENTE</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+
+</body>
+</html>
