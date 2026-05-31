@@ -1,18 +1,3 @@
-const $ = id => document.getElementById(id)
-
-const els = {
-  progresso:    $('label-progresso'),
-  acertos:      $('label-acertos'),
-  barra:        $('barra'),
-  pergunta:     $('texto-pergunta'),
-  dica:         $('texto-dica'),
-  alternativas: $('alternativas'),
-  btnNext:      $('btn-next'),
-  placar:       $('placar-final'),
-  mensagem:     $('mensagem-final'),
-  detalhes:     $('detalhes-final'),
-}
-
 const perguntas = [
   { p: "Qual componente processa dados e coordena o funcionamento de todo o sistema?", certa: "CPU", opcoes: ["CPU", "GPU", "RAM", "HD"] },
   { p: "Qual componente do processador realiza cálculos matemáticos e decisões lógicas?", certa: "ULA", opcoes: ["ULA", "Cache L1", "Registrador PC", "Barramento"] },
@@ -25,11 +10,26 @@ const perguntas = [
   { p: "Qual processador é para navegação básica e qual é para jogos e edição, respectivamente?", certa: "Dual Core e Quad Core", opcoes: ["Dual Core e Quad Core", "Single Core e Dual Core", "Quad Core e Octa Core", "Atom e i3"] }
 ]
 
-let atual = 0, acertos = 0, respondeu = false
+let atual = 0, acertos = 0, respondeu = false, els = {}
+
+window.onload = () => {
+  els = {
+    progresso:    document.getElementById('label-progresso'),
+    acertos:      document.getElementById('label-acertos'),
+    barra:        document.getElementById('barra'),
+    pergunta:     document.getElementById('texto-pergunta'),
+    dica:         document.getElementById('texto-dica'),
+    alternativas: document.getElementById('alternativas'),
+    btnNext:      document.getElementById('btn-next'),
+    placar:       document.getElementById('placar-final'),
+    mensagem:     document.getElementById('mensagem-final'),
+    detalhes:     document.getElementById('detalhes-final'),
+  }
+}
 
 function mostrarTela(id) {
   document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'))
-  $('tela-' + id).classList.add('ativa')
+  document.getElementById('tela-' + id).classList.add('ativa')
 }
 
 function iniciarQuiz() {
@@ -43,14 +43,13 @@ function carregarPergunta() {
   const q = perguntas[atual]
   const total = perguntas.length
 
-  els.progresso.textContent = `Pergunta ${atual + 1} de ${total}`
-  els.acertos.textContent   = `✔ ${acertos} acertos`
-  els.barra.style.width     = `${(atual / total) * 100}%`
-  els.pergunta.textContent  = q.p
-  els.btnNext.style.display = 'none'
-
-  els.dica.style.display = q.dica ? 'block' : 'none'
-  els.dica.textContent   = q.dica ? '💡 ' + q.dica : ''
+  els.progresso.textContent  = `Pergunta ${atual + 1} de ${total}`
+  els.acertos.textContent    = `✔ ${acertos} acertos`
+  els.barra.style.width      = `${(atual / total) * 100}%`
+  els.pergunta.textContent   = q.p
+  els.btnNext.style.display  = 'none'
+  els.dica.style.display     = q.dica ? 'block' : 'none'
+  els.dica.textContent       = q.dica || ''
 
   els.alternativas.innerHTML = ''
   ;[...q.opcoes].sort(() => Math.random() - 0.5).forEach(opcao => {
@@ -90,11 +89,11 @@ function mostrarResultado() {
   els.placar.textContent   = `${acertos} / ${perguntas.length}`
   els.detalhes.textContent = `${perguntas.length - acertos} erro(s) · ${Math.round(pct * 100)}% de aproveitamento`
   els.mensagem.textContent =
-    pct === 1  ? '🏆 PERFEITO! Você é mestre em ArqComp!' :
-    pct >= 0.8 ? '⭐ Muito bem! Quase lá!'                :
-    pct >= 0.6 ? '👍 Bom trabalho! Continue estudando.'   :
-    pct >= 0.4 ? '📖 Ainda tem muito a aprender...'       :
-                 '💀 GAME OVER. Revise o conteúdo!'
+    pct === 1  ? 'PERFEITO! Você é mestre em ArqComp!' :
+    pct >= 0.8 ? 'Muito bem! Quase lá!'                :
+    pct >= 0.6 ? 'Bom trabalho! Continue estudando.'   :
+    pct >= 0.4 ? 'Ainda tem muito a aprender...'       :
+                 'GAME OVER. Revise o conteúdo!'
 }
 
 function reiniciar() { mostrarTela('start') }
